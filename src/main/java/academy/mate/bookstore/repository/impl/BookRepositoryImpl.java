@@ -38,7 +38,6 @@ public class BookRepositoryImpl implements BookRepository {
                 session.close();
             }
         }
-
     }
 
     @Override
