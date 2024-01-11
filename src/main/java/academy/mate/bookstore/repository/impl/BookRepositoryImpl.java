@@ -3,20 +3,17 @@ package academy.mate.bookstore.repository.impl;
 import academy.mate.bookstore.model.Book;
 import academy.mate.bookstore.repository.BookRepository;
 import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@RequiredArgsConstructor
 @Repository
 public class BookRepositoryImpl implements BookRepository {
     private final SessionFactory sessionFactory;
-
-    @Autowired
-    public BookRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public Book save(Book book) {
@@ -46,6 +43,15 @@ public class BookRepositoryImpl implements BookRepository {
             return session.createQuery("FROM Book", Book.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can`t get list of books from DB", e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(Book.class, id));
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get book by id from DB: " + id, e);
         }
     }
 }
