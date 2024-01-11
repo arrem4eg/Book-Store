@@ -30,7 +30,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new EntityNotFoundException("Can`t create book " + book, e);
+            throw new RuntimeException("Can`t save book to DB", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -43,7 +43,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
         } catch (Exception e) {
-            throw new EntityNotFoundException("Can`t get list of books from DB", e);
+            throw new RuntimeException("Can`t get list of books from DB", e);
         }
     }
 
@@ -51,8 +51,8 @@ public class BookRepositoryImpl implements BookRepository {
     public Optional<Book> findById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(Book.class, id));
-        } catch (RuntimeException e) {
-            throw new EntityNotFoundException("Can't get book by id from DB: " + id, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get book by id from DB: " + id, e);
         }
     }
 }
