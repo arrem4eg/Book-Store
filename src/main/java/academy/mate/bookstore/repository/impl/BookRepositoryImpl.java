@@ -1,6 +1,5 @@
 package academy.mate.bookstore.repository.impl;
 
-import academy.mate.bookstore.exception.EntityNotFoundException;
 import academy.mate.bookstore.model.Book;
 import academy.mate.bookstore.repository.BookRepository;
 import java.util.List;
