@@ -59,7 +59,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    protected ResponseEntity<Object> SQLIntegrityConstraintException(
+    protected ResponseEntity<Object> sqlException(
             SQLIntegrityConstraintViolationException ex,
             WebRequest request
     ) {
