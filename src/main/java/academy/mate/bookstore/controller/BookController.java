@@ -3,6 +3,7 @@ package academy.mate.bookstore.controller;
 import academy.mate.bookstore.dto.BookDto;
 import academy.mate.bookstore.dto.CreateBookRequestDto;
 import academy.mate.bookstore.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,13 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
+    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
     @PutMapping("/{id}")
     public BookDto updateBookById(@PathVariable Long id,
-                                  @RequestBody CreateBookRequestDto requestDto) {
+                                  @RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.updateById(id, requestDto);
     }
 
